@@ -1,0 +1,13 @@
+﻿  binarySearchTree.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binarySearchTree.c(49,7): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binarySearchTree.c(118,53): warning C4047: '!=': 'int' differs in levels of indirection from 'void *'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binarySearchTree.c(135,36): warning C4013: 'malloc' undefined; assuming extern returning int
+  binaryTree.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binaryTree.c(47,7): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binaryTree.c(53,37): warning C4013: 'malloc' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\binaryTree.c(128,53): warning C4047: '!=': 'int' differs in levels of indirection from 'void *'
+  main.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\main.c(134,48): warning C4047: 'function': 'int' differs in levels of indirection from 'void *'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_6\main.c(134,44): warning C4024: 'getTreeValueArr': different types for formal and actual parameter 2
+  Generating Code...
+  SS21_Exercise_6.vcxproj -> C:\Users\marco\source\repos\Fist_study_C_program\Debug\SS21_Exercise_6.exe

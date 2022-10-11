@@ -1,0 +1,16 @@
+﻿  main.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\main.c(69,16): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\main.c(158,88): warning C4090: 'function': different 'const' qualifiers
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\main.c(181,88): warning C4090: 'function': different 'const' qualifiers
+  mayarAccessControl.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\mayarAccessControl.c(31,32): warning C4047: 'function': 'int *' differs in levels of indirection from 'int *[3]'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\mayarAccessControl.c(31,20): warning C4024: 'isMallocNull': different types for formal and actual parameter 1
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\mayarAccessControl.c(95,30): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+  sortings.c
+  triangularMatrix.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\triangularMatrix.c(25,27): warning C4013: 'malloc' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\triangularMatrix.c(41,7): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\triangularMatrix.c(25,1): warning C4047: 'initializing': 'int *' differs in levels of indirection from 'int'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_3\triangularMatrix.c(62,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  SS21_Exercise_3.vcxproj -> C:\Users\marco\source\repos\Fist_study_C_program\Debug\SS21_Exercise_3.exe

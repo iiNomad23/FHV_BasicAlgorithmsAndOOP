@@ -1,0 +1,18 @@
+﻿  linkedList.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(19,27): warning C4013: 'malloc' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(19,1): warning C4047: 'initializing': 'Node_t *' differs in levels of indirection from 'int'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(49,1): warning C4047: 'initializing': 'Node_t *' differs in levels of indirection from 'int'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(73,1): warning C4047: 'initializing': 'Node_t *' differs in levels of indirection from 'int'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(99,10): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(147,1): warning C4090: 'initializing': different 'const' qualifiers
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(196,30): warning C4013: 'getListLength' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(230,1): warning C4090: 'initializing': different 'const' qualifiers
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\linkedList.c(273,1): warning C4047: 'initializing': 'Node_t *' differs in levels of indirection from 'int'
+  main.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\main.c(82,1): warning C4244: 'initializing': conversion from 'double' to 'value_t', possible loss of data
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\main.c(108,21): warning C4047: 'function': 'Node_t **' differs in levels of indirection from 'Node_t *'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\main.c(108,16): warning C4024: 'insertFront3': different types for formal and actual parameter 1
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\main.c(115,19): warning C4047: 'function': 'Node_t *' differs in levels of indirection from 'Node_t **'
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_5\main.c(115,13): warning C4024: 'createList': different types for formal and actual parameter 1
+  Generating Code...
+  SS21_Exercise_5.vcxproj -> C:\Users\marco\source\repos\Fist_study_C_program\Debug\SS21_Exercise_5.exe

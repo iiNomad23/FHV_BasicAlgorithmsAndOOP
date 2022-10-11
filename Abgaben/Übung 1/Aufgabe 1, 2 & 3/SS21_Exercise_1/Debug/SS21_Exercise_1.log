@@ -1,0 +1,6 @@
+﻿  main.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_1\main.c(81,7): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_1\main.c(155,10): warning C4098: 'pointerManipulations': 'void' function returning a value
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_1\main.c(194,22): warning C4013: 'malloc' undefined; assuming extern returning int
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_1\main.c(194,1): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'int'
+  SS21_Exercise_1.vcxproj -> C:\Users\marco\source\repos\Fist_study_C_program\Debug\SS21_Exercise_1.exe

@@ -1,0 +1,6 @@
+﻿  main.c
+  pascalTriangle.c
+C:\Users\marco\source\repos\Fist_study_C_program\SS21_Exercise_4\pascalTriangle.c(20,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  recursiveCalc.c
+  Generating Code...
+  SS21_Exercise_4.vcxproj -> C:\Users\marco\source\repos\Fist_study_C_program\Debug\SS21_Exercise_4.exe

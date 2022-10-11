@@ -1,0 +1,42 @@
+in: N
+N^2 / 2 + N
+get(x, y)
+arr[row * N + x]
+arr[N][N]
+arr[row][col]
+arr[row * N + col]
+
+
+#ifndef TRIANG_IDX_WRAPPER_H
+#define TRIANG_IDX_WRAPPER_H
+
+
+
+
+// calculate num of elements in upper triangular matrix (without diagonal) until given row
+unsigned int total_num_of_elements(unsigned int row, unsigned int dim) {
+	return (unsigned int)((row + 1) * (dim - 1) - ((row * (row + 1)) / 2));
+}
+
+// get number of elements in given row
+unsigned int elements_in_row(unsigned int row, unsigned int dim_of_matrix) {
+	return dim_of_matrix - row - 1;
+}
+
+// calculate index of given(row, column) in flattened array
+unsigned int get_idx(unsigned int row, unsigned int col, unsigned int dim_of_matrix) {
+	if (row > col) {
+		unsigned int temp = row;
+		row = col;
+		col = temp;
+	}
+
+	return (int)(total_num_of_elements(row - 1, dim_of_matrix) + col - (dim_of_matrix - elements_in_row(row, dim_of_matrix)));
+}
+
+// get needed array size for storing upper triangular matrix (without diagonal) in a flat array
+unsigned int get_needed_arr_size(unsigned int dim_of_matrix) {
+	return (unsigned int)(dim_of_matrix * (dim_of_matrix - 1) / 2);
+}
+
+#endif

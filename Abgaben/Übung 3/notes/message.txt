@@ -1,0 +1,336 @@
+/*
+* Autor: Adrian Essig
+* Datum: 07.04.2021
+* Title: Zutrittskontrolle
+* Uebung03 Aufgabe 3
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 17
+#define TRUE 1
+#define FALSE !(TRUE)
+
+int getBestMatch(const int* pSpeechPattern, int maxThreshold, int lineLength);
+int compareSpeechPatterns(const int pattern1[], const int pattern2[], const int threshold, const int bestMatchValue, int lineLength);
+int getSpeechPatternFromFile(const char* pPath, int* pValues, int lineLength);
+
+int testGetSpeechPatternFromFile(char testcase[], const char* pPath, int* pValues, int lineLength, int expectedResult[]);
+int testCompareSpeechPatterns(char testcase[], const int pattern1[], const int pattern2[], const int threshold, const int bestMatchValue, int lineLength, int expectedResult);
+int testGetBestMatch(char testcase[], const int speechPattern[], int maxThreshold, int lineLength, int expectedResult);
+int runTests();
+
+int main(int argc, char** argv) {
+
+	runTests();
+
+
+	const char* pPath = "C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Samples\\Mrs_Prof_Mayar.txt";
+
+	int lineLength = getLineLength(pPath);
+
+	int* pValues = malloc(sizeof(int) * lineLength);
+	//int values[SIZE] = { 0 };
+	getSpeechPatternFromFile(pPath, pValues, lineLength);
+
+	getBestMatch(pValues, 0, lineLength);
+
+	free(pValues);
+	pValues = NULL;
+
+	return 0;
+}
+
+int getBestMatch(const int* pSpeechPattern, int maxThreshold, int lineLength) {
+	const char* pPaths[] = {
+		"C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Samples\\Prof_Mayar.txt",
+		"C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Samples\\Mrs_Prof_Mayar.txt",
+		"C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Samples\\Prof_Mayar_Son.txt"
+	};
+
+	int numberOfSamples = 3;
+	int bestMatchValue = maxThreshold;
+	int newBestMatchValue = bestMatchValue;
+	int bestSample = -1;
+
+	int* pValues = malloc(sizeof(int) * lineLength);
+	for (int i = 0; i < 3; i++) {
+		getSpeechPatternFromFile(pPaths[i], pValues, lineLength);
+
+		//the bestMatchValue will be updated after each comparison
+		//because there's no reason to keep searching if a better match has already been found
+		newBestMatchValue = compareSpeechPatterns(pSpeechPattern, pValues, maxThreshold, bestMatchValue, lineLength);
+		if (bestMatchValue >= newBestMatchValue && newBestMatchValue != -1) {
+			bestMatchValue = newBestMatchValue;
+			bestSample = i;
+		}
+	}
+	if (bestSample >= 0)
+	{
+		printf("Best Match: %s\n", pPaths[bestSample]);
+	}
+	else
+	{
+		printf("No Match found\n");
+	}
+
+	free(pValues);
+	pValues = NULL;
+
+	return bestSample;
+}
+
+int compareSpeechPatterns(const int pattern1[], const int pattern2[], const int threshold, const int bestMatchValue, int lineLength) {
+
+	int difference = -1;
+
+	if (threshold >= 0)
+	{
+		difference = 0;
+		int i = 0;
+
+		while (i < lineLength && difference <= threshold && difference <= bestMatchValue)
+		{
+
+			//regular difference calculation
+			//if (pattern1[i] >= pattern2[i]) {
+			//	difference += (pattern1[i] - pattern2[i]);
+			//}
+			//else
+			//{
+			//	difference += pattern2[i] - pattern1[i];
+			//}
+			//this could also be solved by using abs()
+			//difference = abs(pattern1[i] - pattern2[i]);
+
+			difference += (pattern1[i] - pattern2[i]) * (pattern1[i] - pattern2[i]);
+
+			i++;
+		}
+
+	}
+
+	return difference;
+}
+
+int getSpeechPatternFromFile(const char* pPath, int* pValues, int lineLength) {
+
+	int result = 0;
+
+
+	FILE* file = NULL;
+	errno_t err = fopen_s(&file, pPath, "r");
+
+	if (file == NULL) {
+		printf("error opening file: %d", err);
+		result = -1;
+	}
+	else
+	{
+		char line[256];
+		char* pRes;
+		int currentLine = 0;
+		int lineOffset = 3; //is needed because the first three characters in a line aren't actual data
+
+		do {
+			pRes = fgets(line, 256, file);
+
+			for (int i = 0; i < lineLength; i++) {
+				if (line[i + lineOffset] == '*') {
+					pValues[i] = currentLine;
+				}
+			}
+			currentLine++;
+		} while (pRes != NULL);
+
+		fclose(file);
+	}
+
+	return result;
+}
+
+int getLineLength(const char* pPath) {
+	int result = 0;
+
+
+	FILE* file = NULL;
+	errno_t err = fopen_s(&file, pPath, "r");
+
+	if (file == NULL) {
+		printf("error opening file: %d", err);
+		result = -1;
+	}
+	else
+	{
+		char line[256];
+		char* pRes;
+		int currentLine = 0;
+
+		//read until first +
+		int startOfLine = 0;
+		pRes = fgets(line, 256, file);
+		while (line[startOfLine] != '+')
+		{
+			startOfLine++;
+		}
+		int endOfLine = startOfLine + 1;
+		//read until second +
+		while (line[endOfLine] != '+')
+		{
+			endOfLine++;
+		}
+
+		result = endOfLine - startOfLine - 1;
+	}
+
+	return result;
+}
+
+int testGetSpeechPatternFromFile(char testcase[], const char* pPath, int* pValues, int lineLength, int expectedResult[]) {
+	int success = TRUE;
+	int result = getSpeechPatternFromFile(pPath, pValues, lineLength);
+
+
+	if (result != -1) {
+
+		int i = 0;
+
+		while (i < lineLength && success == TRUE) {
+			if (expectedResult[i] != pValues[i]) {
+				printf("%s nicht erfolgreich\n", testcase);
+				success = FALSE;
+			}
+			i++;
+		}
+	}
+
+	return success;
+}
+
+int testCompareSpeechPatterns(char testcase[], const int pattern1[], const int pattern2[], const int threshold, const int bestMatchValue, int lineLength, int expectedResult) {
+	int success = TRUE;
+	int result = compareSpeechPatterns(pattern1, pattern2, threshold, bestMatchValue, lineLength);
+
+	int i = 0;
+
+	if (expectedResult != result) {
+		printf("%s nicht erfolgreich\n", testcase);
+		success = FALSE;
+	}
+
+	return success;
+}
+
+int testGetBestMatch(char testcase[], const int speechPattern[], int maxThreshold, int lineLength, int expectedResult) {
+	int success = TRUE;
+	int result = getBestMatch(speechPattern, maxThreshold, lineLength);
+
+	int i = 0;
+
+	if (expectedResult != result) {
+		printf("%s nicht erfolgreich\n", testcase);
+		success = FALSE;
+	}
+
+	return success;
+}
+
+int runTests() {
+	int result = TRUE;
+	int lineLength = 17;
+	{
+		const char* pPath = "C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Testcases\\Prof_Mayar.txt";
+		int* pValues = malloc(sizeof(int) * lineLength);
+		int expectedResult[SIZE] = { 5,5,5,4,3,3,2,3,3,3,4,2,3,3,4,4,3 };
+		int lineLength = 17;
+		result = testGetSpeechPatternFromFile("Testcase1", pPath, pValues, lineLength, lineLength, expectedResult) && result;
+	}
+	{
+		const char* pPath = "C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Testcases\\Mrs_Prof_Mayar.txt";
+		int* pValues = malloc(sizeof(int) * lineLength);
+		int expectedResult[SIZE] = { 3,3,3,3,3,2,2,3,3,3,2,2,2,1,1,1,5 };
+		int lineLength = 17;
+		result = testGetSpeechPatternFromFile("Testcase2", pPath, pValues, lineLength, expectedResult) && result;
+	}
+	{
+		const char* pPath = "C:\\Users\\Adrian\\source\\repos\\Zutrittskontrolle\\Zutrittskontrolle\\Testcases\\Empty.txt";
+		int* pValues = malloc(sizeof(int) * lineLength);
+		int expectedResult[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+		int lineLength = 17;
+		result = testGetSpeechPatternFromFile("Testcase3", pPath, pValues, lineLength, expectedResult) && result;
+	}
+
+	{
+		int pattern1[SIZE] = { 5,5,5,4,3,3,2,3,3,3,4,2,3,3,4,4,3 };
+		int pattern2[SIZE] = { 5,5,5,4,3,3,2,3,3,3,4,2,3,3,4,4,3 };
+		int expectedResult = 0;
+		int lineLength = 17;
+		result = testCompareSpeechPatterns("Testcase4", pattern1, pattern2, 10, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int pattern1[SIZE] = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int pattern2[SIZE] = { 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int expectedResult = 1;
+		int lineLength = 17;
+		result = testCompareSpeechPatterns("Testcase5", pattern1, pattern2, 10, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int pattern1[SIZE] = { 2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int pattern2[SIZE] = { 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int expectedResult = 4;
+		int lineLength = 17;
+		result = testCompareSpeechPatterns("Testcase6", pattern1, pattern2, 10, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int pattern1[SIZE] = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int pattern2[SIZE] = { 1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int expectedResult = 1;
+		int lineLength = 17;
+		result = testCompareSpeechPatterns("Testcase7", pattern1, pattern2, 0, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int pattern1[SIZE] = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int pattern2[SIZE] = { 1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+		int expectedResult = 1;
+		int lineLength = 17;
+		result = testCompareSpeechPatterns("Testcase8", pattern1, pattern2, 10, 0, lineLength, expectedResult) && result;
+	}
+
+	{
+		int speechPattern[SIZE] = { 5,5,5,4,3,3,2,3,3,3,4,2,3,3,4,4,3 };
+		int expectedResult = 0;
+		int lineLength = 17;
+		result = testGetBestMatch("Testcase9", speechPattern, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int speechPattern[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+		int expectedResult = -1;
+		int lineLength = 17;
+		result = testGetBestMatch("Testcase10", speechPattern, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int speechPattern[SIZE] = { 3,3,3,3,3,2,2,3,3,3,2,2,2,1,1,1,5 };
+		int expectedResult = 1;
+		int lineLength = 17;
+		result = testGetBestMatch("Testcase11", speechPattern, 10, lineLength, expectedResult) && result;
+	}
+	{
+		int speechPattern[SIZE] = { 3,3,3,3,3,2,2,3,3,3,2,2,2,1,1,1,5 };
+		int expectedResult = 1;
+		int lineLength = 17;
+		result = testGetBestMatch("Testcase12", speechPattern, 0, lineLength, expectedResult) && result;
+	}
+	{
+		int speechPattern[SIZE] = { 2,3,3,3,3,2,2,3,3,3,2,2,2,1,1,1,5 };
+		int expectedResult = -1;
+		int lineLength = 17;
+		result = testGetBestMatch("Testcase13", speechPattern, 0, lineLength, expectedResult) && result;
+	}
+
+	if (result == TRUE) {
+		printf("Tests successfully completed\n");
+	}
+
+	return result;
+}
